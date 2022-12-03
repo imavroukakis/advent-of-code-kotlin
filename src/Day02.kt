@@ -10,30 +10,27 @@ fun main() {
         "Z" to Scissors,
     )
 
-    fun toHand(hand: String): Hand = handLookup.getValue(hand)
+
+    fun String.toHand(): Hand = handLookup.getValue(this)
 
 
-    fun part1(input: List<String>): Int {
-        return input.sumOf {
-            val split = it.split(" ")
-            val opponentHand = toHand(split[0])
-            val playerHand = toHand(split[1])
-            playerHand.pointsAgainst(opponentHand) + playerHand.value()
-        }
+    fun part1(input: List<String>): Int = input.sumOf {
+        val split = it.split(" ")
+        val opponentHand = split[0].toHand()
+        val playerHand = split[1].toHand()
+        playerHand.pointsAgainst(opponentHand) + playerHand.value()
     }
 
-    fun part2(input: List<String>): Int {
-        return input.sumOf {
-            val split = it.split(" ")
-            val opponentHand = toHand(split[0])
-            val playerHand = when (split[1]) {
-                "X" -> opponentHand.defeats()
-                "Y" -> opponentHand
-                "Z" -> opponentHand.loses()
-                else -> throw IllegalArgumentException()
-            }
-            playerHand.pointsAgainst(opponentHand) + playerHand.value()
+    fun part2(input: List<String>): Int = input.sumOf {
+        val split = it.split(" ")
+        val opponentHand = split[0].toHand()
+        val playerHand = when (split[1]) {
+            "X" -> opponentHand.defeats()
+            "Y" -> opponentHand
+            "Z" -> opponentHand.loses()
+            else -> throw IllegalArgumentException()
         }
+        playerHand.pointsAgainst(opponentHand) + playerHand.value()
     }
 
 
