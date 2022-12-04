@@ -10,18 +10,24 @@ fun main() {
         start.toInt()..end.toInt()
     } ?: IntRange.EMPTY
 
-    fun part1(input: List<String>): Int =
-        input.map { //IDE suggestion is bad due to https://youtrack.jetbrains.com/issue/KT-46360
-            val (elfOneRange, elfTwoRange) = regex.matchEntire(it)
-            val union = elfOneRange.union(elfTwoRange).size
-            if (elfOneRange.count() == union || elfTwoRange.count() == union) 1 else 0
-        }.sum()
+    fun part1(input: List<String>): Int {
+        val solution: (String) -> Int =
+            { //IDE suggestion is bad due to https://youtrack.jetbrains.com/issue/KT-46360
+                val (elfOneRange, elfTwoRange) = regex.matchEntire(it)
+                val union = elfOneRange.union(elfTwoRange).size
+                if (elfOneRange.count() == union || elfTwoRange.count() == union) 1 else 0
+            }
+        return input.sumOf(solution)
+    }
 
-    fun part2(input: List<String>): Int =
-        input.map { //IDE suggestion is bad due to https://youtrack.jetbrains.com/issue/KT-46360
-            val (elfOneRange, elfTwoRange) = regex.matchEntire(it)
-            if (elfOneRange.intersect(elfTwoRange).isNotEmpty()) 1 else 0
-        }.sum()
+    fun part2(input: List<String>): Int {
+        val solution: (String) -> Int =
+            { //IDE suggestion is bad due to https://youtrack.jetbrains.com/issue/KT-46360
+                val (elfOneRange, elfTwoRange) = regex.matchEntire(it)
+                if (elfOneRange.intersect(elfTwoRange).isNotEmpty()) 1 else 0
+            }
+        return input.sumOf(solution)
+    }
 
     val testInput = readInput("Day04_test")
     check(part1(testInput) == 2)
